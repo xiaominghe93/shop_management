@@ -21,10 +21,10 @@ import {
   Table,
   TableColumn,
   Pagination,
-  Switch,
-  Tooltip,
   Dialog,
-  MessageBox
+  MessageBox,
+  Switch,
+  Tooltip
 } from 'element-ui'
 
 Vue.use(Button)
@@ -37,18 +37,18 @@ Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Menu)
 Vue.use(MenuItem)
-Vue.use(Submenu)
 Vue.use(MenuItemGroup)
+Vue.use(Submenu)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Card)
-Vue.use(Col)
 Vue.use(Row)
+Vue.use(Col)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Switch)
-Vue.use(Tooltip)
 Vue.use(Dialog)
+Vue.use(Tooltip)
 Vue.prototype.$msg = Message
 Vue.prototype.$confirm = MessageBox.confirm
