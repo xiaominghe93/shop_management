@@ -11,16 +11,16 @@
       <el-aside :width="collapse? '64px' : '200px'">
         <!-- 侧边栏菜单 -->
         <el-menu
-        background-color="#333744"
-        text-color="#fff"
-        active-text-color="#409eff"
-        unique-opened
-        :collapse="collapse"
-        :collapse-transition="false"
-        router
-        :default-active="activePath"
+          background-color="#333744"
+          text-color="#fff"
+          active-text-color="#409eff"
+          unique-opened
+          :collapse="collapse"
+          :collapse-transition="false"
+          router
+          :default-active="activePath"
         >
-          <div @click="isCollapse" class="isCollapse"> | | |</div>
+          <div @click="isCollapse" class="isCollapse">| | |</div>
           <el-submenu v-for="item in menuList" :key="item.id" :index="item.id + ''">
             <!-- 一级菜单模板 -->
             <template slot="title">
@@ -30,10 +30,10 @@
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-            :index="'/' + childItem.path"
-            v-for="childItem in item.children"
-            :key="childItem.id"
-            @click="saveState('/' + childItem.path)"
+              :index="'/' + childItem.path"
+              v-for="childItem in item.children"
+              :key="childItem.id"
+              @click="saveState('/' + childItem.path)"
             >
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       menuList: [
         // 菜单列表数据
@@ -166,22 +166,22 @@ export default {
       activePath: ''
     }
   },
-  created () {
+  created() {
     // 页面创建时获取子菜单激活状态的path
     this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
-    logout () {
+    logout() {
       console.log(123)
       // 一般情况点击退出 先清楚token然后返回到登录页
       this.$router.push('/login')
     },
     // 点击控制菜单栏的折叠
-    isCollapse () {
+    isCollapse() {
       this.collapse = !this.collapse
     },
     // 点击跳转到对应的页面 将该子菜单的path 存储起来
-    saveState (activePath) {
+    saveState(activePath) {
       window.sessionStorage.setItem('activePath', activePath)
       this.activePath = activePath
     }
@@ -228,10 +228,10 @@ export default {
   line-height: 30px;
   text-align: center;
   color: #fff;
-  background-color: #4A5064;
+  background-color: #4a5064;
 }
 
 .iconfont {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 </style>

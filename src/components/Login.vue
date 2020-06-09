@@ -35,8 +35,8 @@ export default {
     return {
       // 登录表单的绑定数据
       loginForm: {
-        username: 'adminhzm',
-        password: 'adminhzm'
+        username: 'admin',
+        password: '123456'
       },
       // 表单的验正规则
       loginFormRules: {
@@ -61,10 +61,9 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return this.$msg.warning('输入格式不正确')
         const { data: res } = await this.$http.post('login', this.loginForm)
-        console.log(res)
-        if (!res.status === 200) return this.$msg.error(res.msg)
-        window.sessionStorage.setItem('token', res.token)
-        this.$msg.success(res.msg)
+        if (res.meta.status !== 200) return this.$msg.error(res.meta.msg)
+        window.sessionStorage.setItem('token', res.data.token)
+        this.$msg.success(res.meta.msg)
         this.$router.push('/home')
       })
     }
