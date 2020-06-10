@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 面包屑导航 -->
-    <Breadcrumb :userList="'用户列表'" :userManage="'用户管理'" />
+    <Breadcrumb :secondNav="'用户管理'" :thirdNav="'用户列表'" />
     <!-- 卡片试图 -->
     <el-card shadow="always">
       <!-- 搜索与添加用户 -->
@@ -61,7 +61,12 @@
               ></el-button>
             </el-tooltip>
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                size="mini"
+                @click="setRole(scope.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -118,6 +123,30 @@
           <el-button type="primary" @click="sentEditUserInfo">确 定</el-button>
         </span>
       </el-dialog>
+
+      <!-- 分配角色 -->
+      <el-dialog title="提示" :visible.sync="setRoleDialogVisible" width="50%" @close="cloaseSetRole">
+        <div>
+          <p>当前的用户: {{editForm.username}}</p>
+          <p>当前的角色: {{editForm.role_name}}</p>
+          <p>
+            当前的角色:
+            <el-select v-model="roleId" placeholder="请选择">
+              <el-option
+                v-for="item in rolesList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </p>
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="setRoleConfirm">确 定</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -156,12 +185,7 @@ export default {
         pagesize: 2
       },
       pageTotal: null,
-      addForm: {
-        username: '',
-        password: '',
-        email: '',
-        mobile: null
-      },
+      addForm: {},
       addFormrules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -186,12 +210,7 @@ export default {
       serchUser: [],
       editDialogVisible: false,
       // 编辑用户信息
-      editForm: {
-        id: '',
-        username: '',
-        email: '',
-        mobile: null
-      },
+      editForm: {},
       editFormRules: {
         // 编辑用户信息时的输入验证规则
         email: [
@@ -202,7 +221,12 @@ export default {
           { required: true, message: '请输入电话', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
         ]
-      }
+      },
+      // 分配角色对话框显示与隐藏
+      setRoleDialogVisible: false,
+      // 所有角色信息
+      rolesList: [],
+      roleId: ''
     }
   },
   components: {
@@ -210,6 +234,7 @@ export default {
   },
   created() {
     this.getUsersList()
+    this.getRoles()
   },
   methods: {
     // 获取用户列表
@@ -262,7 +287,6 @@ export default {
     // 根据id查询用户
     async userIdSearch(id) {
       const { data: res } = await this.$http.get(`users/${id}`)
-      console.log(res)
       this.serchUser.push(res.data)
       this.usersList = this.serchUser
     },
@@ -283,7 +307,6 @@ export default {
           `users/${this.editForm.id}`,
           this.editForm
         )
-        console.log(res)
         if (res.meta.status !== 200) return this.$msg.error(res.meta.msg)
         this.getUsersList()
         this.$msg.success(res.meta.msg)
@@ -306,7 +329,6 @@ export default {
       })
         .then(async () => {
           const { data: res } = await this.$http.delete(`users/${id}`)
-          console.log(res)
           if (res.meta.status !== 200) return this.$msg.warning(res.meta.msg)
           this.getUsersList()
           this.$msg.success(res.meta.msg)
@@ -314,6 +336,37 @@ export default {
         .catch(() => {
           this.$msg.info('取消了删除')
         })
+    },
+    // 分配角色按钮点击
+    setRole(userInfo) {
+      this.editForm = userInfo
+      this.setRoleDialogVisible = true
+    },
+    // 获取所有可分配到角色
+    async getRoles() {
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) return this.$msg.error(res.meta.msg)
+      this.rolesList = res.data
+      this.$msg.success(res.meta.msg)
+    },
+    // 分配角色确定
+    async setRoleConfirm() {
+      if (!this.roleId) return this.$msg.error('请确认要分配的角色')
+      const { data: res } = await this.$http.put(
+        `users/${this.editForm.id}/role`,
+        {
+          rid: this.roleId
+        }
+      )
+      if (res.meta.status !== 200) return this.$msg.error('分配角色失败')
+      this.getUsersList()
+      this.$msg.success(res.meta.msg)
+      this.setRoleDialogVisible = false
+    },
+    // 关闭分配角色的对话框
+    cloaseSetRole() {
+      this.roleId = ''
+      this.editForm = {}
     }
   }
 }

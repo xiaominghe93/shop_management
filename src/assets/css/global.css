@@ -10,6 +10,7 @@ html, body, #app {
 }
 .el-table {
   font-size: 12px;
+  margin-top: 15px;
 }
 .el-pagination {
   margin-top: 15px;
