@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       // 登录表单的绑定数据
       loginForm: {
@@ -53,11 +53,11 @@ export default {
   },
   methods: {
     // 重置表单
-    resetLoginForm () {
+    resetLoginForm() {
       this.$refs.loginFormRef.resetFields()
     },
     // 登录 预验证
-    login () {
+    login() {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return this.$msg.warning('输入格式不正确')
         const { data: res } = await this.$http.post('login', this.loginForm)
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .login-container {
   background-color: #2b4b6b;
   height: 100%;
@@ -100,13 +100,14 @@ export default {
   padding: 10px;
   box-shadow: 0 0 10px #ddd;
   background-color: #fff;
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #eee;
-    border: 1px solid #aaa;
-  }
+}
+
+.avatar-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #eee;
+  border: 1px solid #ddd;
 }
 
 .login-form {
@@ -115,12 +116,14 @@ export default {
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
-  input {
-    padding: 0 30px;
-  }
-  .login-btn {
-    display: flex;
-    justify-content: flex-end;
-  }
+}
+
+.login-form input {
+  padding: 0 30px;
+}
+
+.login-form .login-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

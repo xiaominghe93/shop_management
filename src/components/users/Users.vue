@@ -25,10 +25,10 @@
       </div>
 
       <!-- 用户列表数据 -->
-      <el-table :data="usersList" border stripe style="width: 100%">
+      <el-table :data="usersList" border stripe>
         <el-table-column type="index" label="#" width="50"></el-table-column>
-        <el-table-column prop="username" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
+        <el-table-column prop="username" label="姓名"></el-table-column>
+        <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="mobile" label="电话"></el-table-column>
         <el-table-column prop="role_name" label="角色"></el-table-column>
         <el-table-column label="状态">
@@ -372,7 +372,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .user-head {
   margin-bottom: 15px;
 }
