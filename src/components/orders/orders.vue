@@ -55,7 +55,12 @@
     </el-card>
 
     <!-- 编辑地址的对话框 -->
-    <el-dialog title="提示" :visible.sync="addressDialogVisible" width="50%" @close="closeAddressDialog">
+    <el-dialog
+      title="提示"
+      :visible.sync="addressDialogVisible"
+      width="50%"
+      @close="closeAddressDialog"
+    >
       <el-form
         :model="addressForm"
         :rules="addressFormRules"
@@ -97,12 +102,8 @@ export default {
         addressCommunity: ''
       },
       addressFormRules: {
-        addressCity: [
-          { required: true, message: '请输入所在区县', trigger: 'blur' }
-        ],
-        addressCommunity: [
-          { required: true, message: '请输详细地址', trigger: 'blur' }
-        ]
+        addressCity: [{ required: true, message: '请输入所在区县', trigger: 'blur' }],
+        addressCommunity: [{ required: true, message: '请输详细地址', trigger: 'blur' }]
       },
       cityData: citydata
     }
@@ -136,19 +137,7 @@ export default {
         .getMinutes()
         .toString()
         .padStart(2, 0)
-      return (
-        year +
-        '-' +
-        month +
-        '-' +
-        day +
-        ' ' +
-        hour +
-        ':' +
-        minute +
-        ':' +
-        second
-      )
+      return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
     }
   },
   methods: {
@@ -157,7 +146,6 @@ export default {
       const { data: res } = await this.$http.get('orders', {
         params: this.ordersParams
       })
-      console.log(res)
       if (res.meta.status !== 200) return this.$msg.error('获取订单失败')
       this.ordersList = res.data.goods
       this.total = res.data.total

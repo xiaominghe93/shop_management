@@ -84,7 +84,6 @@ export default {
       const { data: res } = await this.$http.get('goods', {
         params: this.goodsParam
       })
-      console.log(res)
       if (res.meta.status !== 200) return this.$msg.error('获取商品失败')
       this.goodsList = this.timeFormat(res.data.goods)
       this.total = res.data.total

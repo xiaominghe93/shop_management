@@ -95,7 +95,6 @@ export default {
       const { data: res } = await this.$http.get('categories', {
         params: this.goodsCatparams
       })
-      console.log(res)
       if (res.meta.status !== 200) return this.$msg.error('获取商品分类失败')
       this.goodsCategory = res.data.result
       this.total = res.data.total

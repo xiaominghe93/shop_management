@@ -188,7 +188,6 @@ export default {
     // 获取分类
     async getCategory() {
       const { data: res } = await this.$http.get('categories')
-      console.log(res)
       if (res.meta.status !== 200) return
       this.category = res.data
     },
@@ -206,11 +205,9 @@ export default {
           }
           item.attr_vals = item.attr_vals.split(' ')
         })
-        console.log(res.data)
         this.goodsParams = res.data
       } else {
         this.goodsAttribute = res.data
-        console.log(this.goodsAttribute)
       }
     },
     // 获取选中的值
@@ -227,7 +224,6 @@ export default {
       }
     },
     goodsParamsClick(value) {
-      console.log(value)
     },
     // 删除图片
     handleRemove(file) {
@@ -271,7 +267,6 @@ export default {
           addForm.attrs.push(newInfo)
         })
         const { data: res } = await this.$http.post('goods', addForm)
-        console.log(res)
         if (res.meta.status !== 201) return this.$msg.error('创建商品失败')
         this.$msg.success(res.meta.msg)
         this.$router.push('/goods')

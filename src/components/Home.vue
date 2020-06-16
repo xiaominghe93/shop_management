@@ -172,7 +172,6 @@ export default {
   },
   methods: {
     logout() {
-      console.log(123)
       // 一般情况点击退出 先清楚token然后返回到登录页
       this.$router.push('/login')
     },
@@ -202,13 +201,15 @@ export default {
   align-items: center;
   color: #fff;
   font-size: 20px;
-  img {
-    margin-right: 20px;
-  }
-  .header-img {
-    display: flex;
-    align-items: center;
-  }
+}
+
+.el-header img {
+  margin-right: 20px;
+}
+
+.el-header .header-img {
+  display: flex;
+  align-items: center;
 }
 
 .el-aside {

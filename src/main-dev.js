@@ -13,6 +13,9 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
+// 引入进度条样式
+import 'nprogress/nprogress.css'
+
 // 引入设置的axios
 import http from './http'
 
